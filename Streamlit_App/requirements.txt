@@ -5,4 +5,3 @@ tensorflow
 scipy
 Pillow
 opencv-python
-cv2
