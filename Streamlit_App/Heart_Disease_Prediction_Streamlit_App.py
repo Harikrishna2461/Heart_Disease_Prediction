@@ -6,7 +6,7 @@ from scipy.signal import chirp
 from PIL import Image
 import base64
 
-@st.cache_data
+@st.cache
 def set_bg_hack(main_bg):
     '''
     A function to unpack an image from root folder and set as bg.
