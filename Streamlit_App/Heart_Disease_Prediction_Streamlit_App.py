@@ -36,31 +36,21 @@ interpreter.allocate_tensors()
 
 # Function for preprocessing sound wave into an image
 def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
-    # Load audio file and perform Mel spectrogram conversion
     sample_s, sr = librosa.load(file_path, sr=32000, mono=True)
     melspec = librosa.feature.melspectrogram(y=sample_s, sr=sr)
     melspec = librosa.power_to_db(melspec).astype(np.float32)
-    
-    # Apply chirplet transformation
     w = chirp(melspec, f0=6, f1=1, t1=10, method='linear')
-    
-    # Normalize values to range [0, 255]
-    w_min, w_max = np.min(w), np.max(w)
-    w = 255.0 * (w - w_min) / (w_max - w_min)
-    
-    # Convert the NumPy array to a Pillow image
-    img1 = Image.fromarray(w.astype('uint8'), mode='L')
-    
-    # Resize the image to 128x128 pixels using Lanczos resampling
-    img1 = img1.resize((128, 128), Image.LANCZOS)
-    
-    # Convert the Pillow image back to a NumPy array
-    resized_img = np.array(img1)
-    
-    # Ensure the array has a shape of (128, 128, 1)
+    Height = w.shape[0]
+    Width = w.shape[1]
+    img1 = Image.fromarray(w, "I")
+    img1 = np.array(img1)
+    arr1 = img1.reshape((Height, Width, 1))
+    arr2 = np.array(arr1, dtype='uint8')
+    resized_img = cv2.resize(arr2, (128, 128))
     resized_img = resized_img.reshape((128, 128, 1))
-    
-    return resized_img
+    c_rgb_img = cv2.cvtColor(resized_img, cv2.COLOR_GRAY2RGB)
+    c_rgb_img = np.array(c_rgb_img)
+    return c_rgb_img
 
 # Streamlit UI
 st.title(":red[Sound Wave to Disease Prediction]")
