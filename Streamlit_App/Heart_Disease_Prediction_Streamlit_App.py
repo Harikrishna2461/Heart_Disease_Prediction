@@ -7,25 +7,25 @@ from PIL import Image
 import base64
 import os
 
-#bgm_path = os.path.join(os.path.dirname(__file__), "bgm.png")
+bgm_path = os.path.join(os.path.dirname(__file__), "bgm.png")
 # Define set_bg_hack function without st.markdown
-#def set_bg_hack(main_bg):
-  #  main_bg_ext = "png"
- #   return main_bg_ext
+def set_bg_hack(main_bg):
+    main_bg_ext = "png"
+    return main_bg_ext
 
-# Call set_bg_hack and use st.markdown outside the function
-#main_bg_ext = set_bg_hack(bgm_path)
-#st.markdown(
-    #f"""
-    #<style>
-    #.stApp {{
-      #  background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
-     #   background-size: cover
-    #}}
-   # </style>
-  #  """,
- #   unsafe_allow_html=True
-#)
+#Call set_bg_hack and use st.markdown outside the function
+main_bg_ext = set_bg_hack(bgm_path)
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 #set_bg_hack(bgm_path)
 
 # Load the TensorFlow Lite model
@@ -46,7 +46,7 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     img1 = Image.fromarray(w, "I")
     
     # Resize the image to 128x128 pixels
-    img1 = img1.resize((128, 128), Image.ANTIALIAS)
+    img1 = img1.resize((128, 128), Image.LANCZOS)
     
     # Convert the Pillow image back to a NumPy array
     resized_img = np.array(img1)
