@@ -45,7 +45,7 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     # Convert the NumPy array to a Pillow image
     img1 = Image.fromarray(w, "I")
     
-    # Resize the image to 128x128 pixels
+    # Resize the image to 128x128 pixels using Lanczos resampling
     img1 = img1.resize((128, 128), Image.LANCZOS)
     
     # Convert the Pillow image back to a NumPy array
@@ -61,6 +61,7 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     c_rgb_img = np.array(c_rgb_img)
     
     return c_rgb_img
+
 
 # Streamlit UI
 st.title(":red[Sound Wave to Disease Prediction]")
