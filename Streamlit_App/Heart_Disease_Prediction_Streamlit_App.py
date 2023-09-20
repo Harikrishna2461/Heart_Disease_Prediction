@@ -9,7 +9,7 @@ import os
 
 bgm_path = os.path.join(os.path.dirname(__file__), "bgm.png")
 
-@st.cache
+@st.cache(suppress_st_warning=True)
 def set_bg_hack(main_bg):
     '''
     A function to unpack an image from root folder and set as bg.
