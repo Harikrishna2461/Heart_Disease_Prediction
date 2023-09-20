@@ -36,7 +36,7 @@ def set_bg_hack(main_bg):
 set_bg_hack(bgm_path)
 
 # Load the TensorFlow Lite model
-model_path = 'C:/Users/Hari Krishna D/OneDrive/Desktop/Projects/Heart Disease Prediction Using Self Supervised Neural Networks Project/TFLite Saved Models/model_int8_latest.tflite'
+model_path = os.path.join(os.path.dirname(__file__), "model_int8_latest.tflite")
 interpreter = tf.lite.Interpreter(model_path)
 interpreter.allocate_tensors()
 
