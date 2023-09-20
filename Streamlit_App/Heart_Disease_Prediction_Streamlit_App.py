@@ -4,7 +4,6 @@ import librosa
 import tensorflow as tf
 from scipy.signal import chirp
 from PIL import Image
-import cv2
 import base64
 
 @st.cache_data
@@ -46,14 +45,25 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     w = chirp(melspec, f0=6, f1=1, t1=10, method='linear')
     Height = w.shape[0]
     Width = w.shape[1]
+    
+    # Convert the NumPy array to a Pillow image
     img1 = Image.fromarray(w, "I")
-    img1 = np.array(img1)
-    arr1 = img1.reshape((Height, Width, 1))
-    arr2 = np.array(arr1, dtype='uint8')
-    resized_img = cv2.resize(arr2, (128, 128))
+    
+    # Resize the image to 128x128 pixels
+    img1 = img1.resize((128, 128), Image.ANTIALIAS)
+    
+    # Convert the Pillow image back to a NumPy array
+    resized_img = np.array(img1)
+    
+    # Ensure the array has a shape of (128, 128, 1)
     resized_img = resized_img.reshape((128, 128, 1))
-    c_rgb_img = cv2.cvtColor(resized_img, cv2.COLOR_GRAY2RGB)
+    
+    # Convert grayscale to RGB format
+    c_rgb_img = Image.merge('RGB', (img1, img1, img1))
+    
+    # Convert the Pillow image back to a NumPy array
     c_rgb_img = np.array(c_rgb_img)
+    
     return c_rgb_img
 
 # Streamlit UI
