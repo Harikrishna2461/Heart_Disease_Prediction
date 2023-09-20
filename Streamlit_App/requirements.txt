@@ -4,4 +4,4 @@ librosa
 tensorflow
 scipy
 Pillow
-opencv-python
+opencv-python-headless
