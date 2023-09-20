@@ -5,6 +5,9 @@ import tensorflow as tf
 from scipy.signal import chirp
 from PIL import Image
 import base64
+import os
+
+bgm_path = os.path.join(os.path.dirname(__file__), "bgm.png")
 
 @st.cache
 def set_bg_hack(main_bg):
@@ -30,7 +33,7 @@ def set_bg_hack(main_bg):
          unsafe_allow_html=True
      )
 
-set_bg_hack('bgm.png')
+set_bg_hack(bgm_path)
 
 # Load the TensorFlow Lite model
 model_path = 'C:/Users/Hari Krishna D/OneDrive/Desktop/Projects/Heart Disease Prediction Using Self Supervised Neural Networks Project/TFLite Saved Models/model_int8_latest.tflite'
