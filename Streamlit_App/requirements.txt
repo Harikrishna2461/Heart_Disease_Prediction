@@ -1,0 +1,7 @@
+streamlit==0.90.0
+numpy==1.21.2
+librosa==0.8.1
+tensorflow==2.6.0
+scipy==1.7.3
+Pillow==8.2.0
+opencv-python==4.5.3.56
