@@ -48,19 +48,16 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     # Resize the image to 128x128 pixels using Lanczos resampling
     img1 = img1.resize((128, 128), Image.LANCZOS)
     
+    # Convert the Pillow image to grayscale
+    img1 = img1.convert('L')
+    
     # Convert the Pillow image back to a NumPy array
     resized_img = np.array(img1)
     
     # Ensure the array has a shape of (128, 128, 1)
     resized_img = resized_img.reshape((128, 128, 1))
     
-    # Convert grayscale to RGB format
-    c_rgb_img = Image.merge('RGB', (img1, img1, img1))
-    
-    # Convert the Pillow image back to a NumPy array
-    c_rgb_img = np.array(c_rgb_img)
-    
-    return c_rgb_img
+    return resized_img
 
 
 # Streamlit UI
