@@ -9,27 +9,27 @@ import os
 
 bgm_path = os.path.join(os.path.dirname(__file__), "bgm.png")
 # Define set_bg_hack function without st.markdown
-def set_bg_hack(main_bg):
-    main_bg_ext = "png"
-    return main_bg_ext
+#def set_bg_hack(main_bg):
+  #  main_bg_ext = "png"
+ #   return main_bg_ext
 
 # Call set_bg_hack and use st.markdown outside the function
-main_bg_ext = set_bg_hack(bgm_path)
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+#main_bg_ext = set_bg_hack(bgm_path)
+#st.markdown(
+    #f"""
+    #<style>
+    #.stApp {{
+      #  background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
+     #   background-size: cover
+    #}}
+   # </style>
+  #  """,
+ #   unsafe_allow_html=True
+#)
 #set_bg_hack(bgm_path)
 
 # Load the TensorFlow Lite model
-model_path = os.path.join(os.path.dirname(__file__), "model_int8_latest.tflite")
+model_path = 'model_int8_latest.tflite'
 interpreter = tf.lite.Interpreter(model_path)
 interpreter.allocate_tensors()
 
