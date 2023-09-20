@@ -1,7 +1,7 @@
-streamlit==0.87.0
-numpy==1.26.0
-librosa>=0.8.1
-tensorflow>=2.7.0
-scipy>=1.7.3
-Pillow>=8.2.0
-opencv-python>=4.5.3.56
+streamlit
+numpy
+librosa
+tensorflow
+scipy
+Pillow
+opencv-python
