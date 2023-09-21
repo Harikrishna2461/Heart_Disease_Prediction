@@ -84,9 +84,9 @@ if uploaded_file and predict_button:
 
             # Display the predicted class
             if predicted_class != 4:
-                st.success(f"**The Predicted Disease is : {class_labels[predicted_class]}**")
+                st.markdown(st.success(f"**The Predicted Disease is : {class_labels[predicted_class]}**"))
             else:
-                st.success(f"**The Patient has {class_labels[predicted_class]}**")
+                st.markdown(st.success(f"**The Patient has {class_labels[predicted_class]}**"))
 
     except Exception as e:
         st.error(f"Error: {str(e)}")
