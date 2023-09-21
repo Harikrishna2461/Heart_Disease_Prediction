@@ -53,7 +53,7 @@ def sound_data_to_image_loading_and_preprocessing_chirplet(file_path):
     return c_rgb_img
 
 # Streamlit UI
-st.title(":red[Sound Wave to Disease Prediction]")
+st.title(":red[Heart Disease Prediction from Heart Beat Sound Wave]")
 # Change the title color to red
 #st.markdown("<span style='color:red'>Custom Color Title</span>", unsafe_allow_html=True)
 
