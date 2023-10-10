@@ -112,10 +112,27 @@ if uploaded_file and predict_button:
             class_labels = ["Aortic Stenosis", "Mitral Regurgitation", "Mitral Stenosis", "Mitral Valve Prolapse", "No Disease"]
 
             # Display the predicted class
+            #if predicted_class != 4:
+             #   st.success(f"**The Predicted Disease is : {class_labels[predicted_class]}**")
+            #else:
+             #   st.success(f"**The Patient has {class_labels[predicted_class]}**")
+
+            # Display the predicted class with improved readability
             if predicted_class != 4:
-                st.success(f"**The Predicted Disease is : {class_labels[predicted_class]}**")
+                st.markdown(
+                            f'<p style="color:black; background-color:white;">'
+                            f'<strong>The Predicted Disease is : {class_labels[predicted_class]}</strong>'
+                            f'</p>',
+                            unsafe_allow_html=True
+                            )
             else:
-                st.success(f"**The Patient has {class_labels[predicted_class]}**")
+                st.markdown(
+                            f'<p style="color:black; background-color:white;">'
+                            f'<strong>The Patient has {class_labels[predicted_class]}</strong>'
+                            f'</p>',
+                            unsafe_allow_html=True
+                            )
+
 
     except Exception as e:
         st.error(f"Error: {str(e)}")
