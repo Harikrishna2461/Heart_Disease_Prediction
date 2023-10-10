@@ -81,7 +81,7 @@ def SFT(path, window_size):
     return spectrogram_rgb
 
 # Streamlit UI
-st.title(":green[Heart Disease Prediction from Heart Beat Sound Wave]")
+st.title(":blue[Heart Disease Prediction from Heart Beat Sound Wave]")
 
 # Upload sound wave file
 uploaded_file = st.file_uploader(":green[Upload a sound wave file (.wav)]", type=["wav"])
@@ -120,14 +120,14 @@ if uploaded_file and predict_button:
             # Display the predicted class with improved readability
             if predicted_class != 4:
                 st.markdown(
-                            f'<p style="color:black; background-color:white;">'
+                            f'<p style="color:black; background-color:green; font-size:20px;">'
                             f'<strong>The Predicted Disease is : {class_labels[predicted_class]}</strong>'
                             f'</p>',
                             unsafe_allow_html=True
                             )
             else:
                 st.markdown(
-                            f'<p style="color:black; background-color:white;">'
+                            f'<p style="color:black; background-color:green; font-size:20px;">'
                             f'<strong>The Patient has {class_labels[predicted_class]}</strong>'
                             f'</p>',
                             unsafe_allow_html=True
