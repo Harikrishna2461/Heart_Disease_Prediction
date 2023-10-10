@@ -81,7 +81,7 @@ def SFT(path, window_size):
     return spectrogram_rgb
 
 # Streamlit UI
-st.title(":blue[Heart Disease Prediction from Heart Beat Sound Wave]")
+st.title(":blue[Heart Valve Disease Prediction Using Heart Beat Sound Data]")
 
 # Upload sound wave file
 uploaded_file = st.file_uploader(":green[Upload a sound wave file (.wav)]", type=["wav"])
