@@ -8,6 +8,7 @@ import cv2
 import base64
 import os
 from scipy.io import wavfile
+import matplotlib.pyplot as plt
 
 bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
 
