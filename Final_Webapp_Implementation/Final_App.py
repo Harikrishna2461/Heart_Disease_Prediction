@@ -1,6 +1,5 @@
 import streamlit as st
 import numpy as np
-import librosa
 import tensorflow as tf
 from scipy.signal import chirp
 from PIL import Image
@@ -32,7 +31,7 @@ st.markdown(
 )
 
 # Load the TensorFlow Lite model
-model_path = os.path.join(os.path.dirname(__file__),"autokeras_synch_sft_model.tflite")
+model_path = os.path.join(os.path.dirname(__file__), "autokeras_synch_sft_model.tflite")
 interpreter = tf.lite.Interpreter(model_path)
 interpreter.allocate_tensors()
 
@@ -44,47 +43,42 @@ def synchrosqueeze(matrix, t):
     for i in range(matrix.shape[0]):
         synchrosqueezed[i, :] = matrix[i, :] * np.exp(2j * np.pi * t * inst_freq[i, :])
     return synchrosqueezed
-    
-def SFT(path, window_sizes):
+
+def SFT(path, window_size):
     sample_rate, audio_data = wavfile.read(path)
 
-    results = []
-    for fft_size in window_sizes:
-        overlap_fac = 0.5
-        hop_size = np.int32(np.floor(fft_size * (1 - overlap_fac)))
-        pad_end_size = fft_size
-        total_segments = np.int32(np.ceil(len(audio_data) / np.float32(hop_size)))
-        t_max = len(audio_data) / np.float32(sample_rate)
+    overlap_fac = 0.5
+    hop_size = np.int32(np.floor(window_size * (1 - overlap_fac)))
+    pad_end_size = window_size
+    total_segments = np.int32(np.ceil(len(audio_data) / np.float32(hop_size)))
+    t_max = len(audio_data) / np.float32(sample_rate)
 
-        window = np.hanning(fft_size)
-        inner_pad = np.zeros(fft_size)
+    window = np.hanning(window_size)
+    inner_pad = np.zeros(window_size)
 
-        proc = np.concatenate((audio_data, np.zeros(pad_end_size)))
-        result = np.empty((total_segments, fft_size), dtype=np.float32)
+    proc = np.concatenate((audio_data, np.zeros(pad_end_size)))
+    result = np.empty((total_segments, window_size), dtype=np.float32)
 
-        for i in range(total_segments):
-            current_hop = hop_size * i
-            segment = proc[current_hop:current_hop + fft_size]
-            windowed = segment * window
-            padded = np.append(windowed, inner_pad)
-            spectrum = np.fft.fft(padded) / fft_size
-            autopower = np.abs(spectrum * np.conj(spectrum))
-            result[i, :] = autopower[:fft_size]
+    for i in range(total_segments):
+        current_hop = hop_size * i
+        segment = proc[current_hop:current_hop + window_size]
+        windowed = segment * window
+        padded = np.append(windowed, inner_pad)
+        spectrum = np.fft.fft(padded) / window_size
+        autopower = np.abs(spectrum * np.conj(spectrum))
+        result[i, :] = autopower[:window_size]
 
-        result = 20 * np.log10(result)
-        result = np.clip(result, -40, 200)
+    result = 20 * np.log10(result)
+    result = np.clip(result, -40, 200)
 
-        synchrosqueezed_result = synchrosqueeze(result.T, np.arange(result.shape[0]))
+    synchrosqueezed_result = synchrosqueeze(result.T, np.arange(result.shape[0]))
 
-        resized_spectrogram = cv2.resize(np.abs(synchrosqueezed_result), (128, 128), interpolation=cv2.INTER_LINEAR)
-        resized_spectrogram = (255 * (resized_spectrogram - resized_spectrogram.min()) / (resized_spectrogram.max() - resized_spectrogram.min())).astype(np.uint8)
-        colormap = plt.get_cmap('viridis')
-        spectrogram_rgb = colormap(resized_spectrogram)[:, :, :3]
+    resized_spectrogram = cv2.resize(np.abs(synchrosqueezed_result), (128, 128), interpolation=cv2.INTER_LINEAR)
+    resized_spectrogram = (255 * (resized_spectrogram - resized_spectrogram.min()) / (resized_spectrogram.max() - resized_spectrogram.min())).astype(np.uint8)
+    colormap = plt.get_cmap('viridis')
+    spectrogram_rgb = colormap(resized_spectrogram)[:, :, :3]
 
-        results.append(spectrogram_rgb)
-
-    return results
-
+    return spectrogram_rgb
 
 # Streamlit UI
 st.title(":green[Heart Disease Prediction from Heart Beat Sound Wave]")
@@ -98,15 +92,18 @@ predict_button = st.button("Predict the Disease")
 if uploaded_file and predict_button:
     try:
         # Preprocess the sound wave into an image
-        window_sizes = [512]
-        input_image = SFT(uploaded_file, window_sizes)
+        window_size = 512
+        input_image = SFT(uploaded_file, window_size)
 
         if predict_button:  # Check if the button is pressed
             # Make predictions using the TensorFlow Lite model
             input_details = interpreter.get_input_details()
             output_details = interpreter.get_output_details()
 
-            interpreter.set_tensor(input_details[0]['index'], np.expand_dims(input_image, axis=0))
+            # Reshape the input image to match the expected shape (batch_size=1, height, width, channels=3)
+            input_image = np.expand_dims(input_image, axis=0)
+
+            interpreter.set_tensor(input_details[0]['index'], input_image)
             interpreter.invoke()
             output = interpreter.get_tensor(output_details[0]['index'])
             predicted_class = np.argmax(output)
