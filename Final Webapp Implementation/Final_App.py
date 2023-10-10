@@ -8,7 +8,7 @@ import cv2
 import base64
 import os
 
-bgm_path = os.path.join(os.path.dirname(__file__), "white_bgm.png")
+bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
 # Define set_bg_hack function without st.markdown
 def set_bg_hack(main_bg):
     main_bg_ext = "png"
