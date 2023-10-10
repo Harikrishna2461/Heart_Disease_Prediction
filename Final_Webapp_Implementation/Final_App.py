@@ -7,6 +7,7 @@ from PIL import Image
 import cv2
 import base64
 import os
+from scipy.io import wavfile
 
 bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
 
