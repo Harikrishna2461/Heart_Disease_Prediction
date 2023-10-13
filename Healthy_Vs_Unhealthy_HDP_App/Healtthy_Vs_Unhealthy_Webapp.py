@@ -114,7 +114,7 @@ if uploaded_file and predict_button:
             class_labels = ["Healthy","Unhealthy"]
             st.markdown(
                         f'<p style="color:black; background-color:green; font-size:20px;">'
-                        f'<strong>The Patient is  : {class_labels[predicted_class]}</strong>'
+                        f'<strong>The Patient is {class_labels[predicted_class]}</strong>'
                         f'</p>',
                         unsafe_allow_html=True
                         )
