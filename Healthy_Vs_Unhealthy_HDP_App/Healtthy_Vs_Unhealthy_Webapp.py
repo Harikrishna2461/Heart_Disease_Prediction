@@ -100,6 +100,8 @@ if uploaded_file and predict_button:
             input_details = interpreter.get_input_details()
             output_details = interpreter.get_output_details()
 
+            # Convert the input image data to FLOAT32
+            input_image = input_image.astype('float32')
             # Reshape the input image to match the expected shape (batch_size=1, height, width, channels=3)
             input_image = np.expand_dims(input_image, axis=0)
 
