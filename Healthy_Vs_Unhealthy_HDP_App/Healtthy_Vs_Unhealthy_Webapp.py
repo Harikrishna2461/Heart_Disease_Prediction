@@ -67,8 +67,8 @@ def SFT(path, window_size):
         spectrum = np.fft.fft(padded) / window_size
         autopower = np.abs(spectrum * np.conj(spectrum))
         result[i, :] = autopower[:window_size]
-          result = 20 * np.log10(result)
-      
+        
+    result = 20 * np.log10(result)  
     result = np.clip(result, -40, 200)
 
     synchrosqueezed_result = synchrosqueeze(result.T, np.arange(result.shape[0]))
