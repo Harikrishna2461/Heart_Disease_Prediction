@@ -1,0 +1,24 @@
+BoxLayout:
+    orientation: 'vertical'
+
+    FileChooserIconView:
+        id: file_chooser
+        filters: ["*.wav"]
+        on_selection: app.file_selected(file_chooser.selection[0]) if file_chooser.selection else None
+
+    Button:
+        text: 'Upload File'
+        background_color: 0, 0.7, 0.7, 1  # Background color (RGBA)
+        color: 1, 1, 1, 1  # Text color (RGBA)
+        on_release: app.file_selected(file_chooser.selection)
+
+    Button:
+        text: 'Predict'
+        background_color: 0.7, 0.7, 0, 1  # Background color (RGBA)
+        color: 1, 1, 1, 1  # Text color (RGBA)
+        on_release: app.predict()
+
+    TextInput:
+        id: output_text
+        readonly: True
+
