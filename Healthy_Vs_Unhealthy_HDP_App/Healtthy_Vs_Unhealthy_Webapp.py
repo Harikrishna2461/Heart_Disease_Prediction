@@ -9,26 +9,26 @@ import os
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
 
-bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
+#bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
 
 # Define set_bg_hack function without st.markdown
-def set_bg_hack(main_bg):
-    main_bg_ext = "png"
-    return main_bg_ext
+#def set_bg_hack(main_bg):
+    #main_bg_ext = "png"
+    #return main_bg_ext
 
 # Call set_bg_hack and use st.markdown outside the function
-main_bg_ext = set_bg_hack(bgm_path)
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+#main_bg_ext = set_bg_hack(bgm_path)
+#st.markdown(
+    #f"""
+    #<style>
+    #.stApp {{
+    #    background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(bgm_path, "rb").read()).decode()});
+    #    background-size: cover
+    #}}
+    #</style>
+    #""",
+    #unsafe_allow_html=True
+#s)
 
 # Load the TensorFlow Lite model
 model_path = os.path.join(os.path.dirname(__file__), "Finalised_MobileNetV2_SFT_Model_Dataset-2.tflite")
