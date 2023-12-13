@@ -9,7 +9,7 @@ import os
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
 
-#bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
+bgm_path = os.path.join(os.path.dirname(__file__), "White_BGM.png")
 
 # Define set_bg_hack function without st.markdown
 def set_bg_hack(main_bg):
